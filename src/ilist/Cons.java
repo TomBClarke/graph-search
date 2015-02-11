@@ -70,7 +70,7 @@ public class Cons<A> implements IList<A> {
   }
 
   public <B> B fold(Function2<A,B,B> f, B b) {
-    return f.apply(head, tail.fold(f, ));
+    return f.apply(head, tail.fold(f, b));//WHAT THE FUCCKKKKKKKKKKKKK
   }
 
   public boolean all(Predicate<A> p) {
