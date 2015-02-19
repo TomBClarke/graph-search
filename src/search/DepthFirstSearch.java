@@ -13,19 +13,12 @@ import maybe.Nothing;
 
 public class DepthFirstSearch<A> {
 
-	private ArrayList<Node<A>> visited;
-	//private ArrayList<Node<A>> path;
-
 	public DepthFirstSearch(ArrayList<Node<A>> map) {
-		visited = new ArrayList<Node<A>>();
-		//path = new ArrayList<Node<A>>();
-
 		Predicate<A> condition = new Predicate<A>() {
 			public boolean holds(A a) {
-				return a.equals(new Point(1, 0));
+				return a.equals(new Point(9, 0));
 			}
 		};
-
 		System.out.println(findNodeFrom(map.get(calIndexInList(0, 0)), condition));
 	}
 
@@ -53,6 +46,7 @@ public class DepthFirstSearch<A> {
 
 	Maybe<Node<A>> findNodeFrom(Node<A> x, Predicate<A> p) {
 		Stack<Node<A>> stack = new Stack<Node<A>>();
+		ArrayList<Node<A>> visited = new ArrayList<Node<A>>();
 		stack.push(x);
 		while (!stack.empty()) {
 			Node<A> y = stack.pop();
@@ -71,6 +65,7 @@ public class DepthFirstSearch<A> {
 
 	Maybe<ArrayList<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
 		// TODO - This method.
+		ArrayList<Node<A>>path = new ArrayList<Node<A>>();
 		return new Nothing<ArrayList<Node<A>>>();
 	}
 
