@@ -9,11 +9,16 @@ public class Node<A> {
 	
 	public Node(A nodeContent){
 		this.nodeContent = nodeContent;
+		this.successors = new ArrayList<Node<A>>();
 	}
 	
 	public Node(A nodeContent, ArrayList<Node<A>> successors){
 		this.nodeContent = nodeContent;
 		this.successors = successors;
+	}
+	
+	public String toString(){
+		return "Node " + nodeContent.toString();
 	}
 	
 	public A getContent(){
