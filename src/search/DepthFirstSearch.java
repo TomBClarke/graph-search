@@ -3,6 +3,9 @@ package search;
 import graph.Coordinate;
 import graph.Graph;
 import graph.Node;
+import ilist.Cons;
+import ilist.IList;
+import ilist.Nil;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -71,10 +74,31 @@ public class DepthFirstSearch<A> {
 	 * @param p The predicate the end node must satisfy.
 	 * @return The list of nodes to pass through to get to the target, or nothing if it can't be reached.
 	 */
-	Nothing<LinkedHashSet<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
-		// TODO - This method.
-		//Set<Node<A>>path = new LinkedHashSet<Node<A>>();
-		return new Nothing<LinkedHashSet<Node<A>>>();
+	Maybe<IList<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
+		/*
+		Stack<Node<A>> frontier = new Stack<Node<A>>();
+		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
+		frontier.push(x);
+		IList<A> path = new Cons<A>(x, new Nil<A>());
+		while (!frontier.empty()) {
+			Node<A> y = frontier.pop();
+			path.append(a)
+			if (!visited.contains(y)) {
+				if (p.holds(y.getContent())) {
+					return new Just<IList<Node<A>>>(path);
+				}
+				visited.add(y);
+				if(y.getSuccessors().isEmpty()){
+					for(Node<A> n : y.getSuccessors()){
+						frontier.push(n);
+					}
+				} else {
+					path = path.tail();
+				}
+			}
+		}
+		*/
+		return new Nothing<IList<Node<A>>>();
 	}
 
 	public static void main(String[] args) {
