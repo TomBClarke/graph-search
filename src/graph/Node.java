@@ -67,6 +67,16 @@ public class Node<A> {
 	}
 	
 	/**
+	 * Tests for if the node has equal contents to what it's being compared to.
+	 * 
+	 * @param c The input to be compared to.
+	 * @return Whether the two are equal or not.
+	 */
+	public boolean contentsEquals(A c) {
+		return nodeContent.equals(c);
+	}
+	
+	/**
 	 * Removes a successor from the successors.
 	 * 
 	 * @param node The node to remove.

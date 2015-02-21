@@ -61,12 +61,12 @@ public class Cons<A> implements IList<A> {
     // Search for "short-circuit evaluation" in the internet.
   }
   
-  public IList<A> head(){
-	  return this.head();
+  public A head(){
+	  return this.head;
   }
   
   public IList<A> tail(){
-	  return this.tail();
+	  return this.tail;
   }
 
   // Higher-order functions:

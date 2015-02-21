@@ -1,7 +1,11 @@
 package graph;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import maybe.Just;
+import maybe.Maybe;
+import maybe.Nothing;
 
 //We represent a graph as table of pairs (contents, node with that contents).
 //This assumes that each node has a unique contents.
@@ -16,13 +20,13 @@ import java.util.Map;
  */
 public class Graph<A> {
 	
-	private Map<A, Node<A>> nodes;
+	private Set<Node<A>> nodes;
 
 	/**
 	 * Creates a empty map, with chosen implementation.
 	 */
 	public Graph() {
-		nodes = new LinkedHashMap<A,Node<A>>();
+		nodes = new LinkedHashSet<Node<A>>();
 	}
 
 	/**
@@ -32,14 +36,23 @@ public class Graph<A> {
 	 * @return The node.
 	 */
 	public Node<A> nodeWith(A c) { 
-		Node<A> node;
-		if (nodes.containsKey(c)) {
-			node = nodes.get(c);
-		} else {
-			node = new Node<A>(c);
-			nodes.put(c,node);
-		}
-		return node;
+		for (Node<A> node : nodes) {
+		    if (node.contentsEquals(c)){
+		    	return node;
+		    }
+	    }
+		Node<A> node = new Node<A>(c);
+	    nodes.add(node);
+	    return node;
+	}
+	
+	public Maybe<Node<A>> getNode(A a){
+		for (Node<A> node : nodes) {
+		    if (node.contentsEquals(a)){
+		    	return new Just<Node<A>>(node);
+		    }
+	    }
+		return new Nothing<Node<A>>();
 	}
 
 	/**
@@ -47,7 +60,7 @@ public class Graph<A> {
 	 * 
 	 * @return The nodes.
 	 */
-	public Map<A,Node<A>> getNodes() {
+	public Set<Node<A>> getNodes() {
 		return nodes;
 	}
 }

@@ -39,11 +39,11 @@ public class Nil<A> implements IList<A> {
   }
   
   public IList<A> head(){
-	  return this.head();
+	  return this;
   }
   
   public IList<A> tail(){
-	  return this.tail();
+	  return this;
   }
 
   // Higher-order functions:

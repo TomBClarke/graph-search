@@ -13,6 +13,7 @@ public interface IList<A> {
   public IList<A> append(IList<A> l); // Returns a new list with the list l appended.
   public IList<A> append(A a);       // Returns a new list with the element a appended.
   public boolean has(A a);          // Is the value a an element of the list?
+  public IList<A> tail();
   // Higher-order methods:
   public IList<A> filter(Predicate<A> p);      // Gets the sublist of elements satisfying the predicate.
   public <B> IList<B> map(Function<A,B> f);    // Applies a function to each element of the list.

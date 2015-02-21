@@ -38,7 +38,14 @@ public class DepthFirstSearch<A> {
 				return a.equals(tg);
 			}
 		};
-		System.out.println(findNodeFrom(graph.getNodes().get(sn), condition));
+		
+		if(!graph.getNode(sn).isNothing()) {
+			System.out.println("Node found: " + findNodeFrom(graph.getNode(sn).fromMaybe(), condition));
+			//System.out.println("Path found: " + findPathFrom(graph.getNode(sn).fromMaybe(), condition));
+		} else {
+			System.out.println("Node found: " + graph.getNode(sn));
+			//System.out.println("Path found: " + graph.getNode(sn));
+		}
 	}
 
 	/**
@@ -75,14 +82,14 @@ public class DepthFirstSearch<A> {
 	 * @return The list of nodes to pass through to get to the target, or nothing if it can't be reached.
 	 */
 	Maybe<IList<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
-		/*
 		Stack<Node<A>> frontier = new Stack<Node<A>>();
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
 		frontier.push(x);
-		IList<A> path = new Cons<A>(x, new Nil<A>());
+		IList<Node<A>> path = new Cons<Node<A>>(x, new Nil<Node<A>>());
 		while (!frontier.empty()) {
 			Node<A> y = frontier.pop();
-			path.append(a)
+			path.append(y);
+			System.out.println("Item added to path");
 			if (!visited.contains(y)) {
 				if (p.holds(y.getContent())) {
 					return new Just<IList<Node<A>>>(path);
@@ -94,10 +101,10 @@ public class DepthFirstSearch<A> {
 					}
 				} else {
 					path = path.tail();
+					System.out.println("Item removed from path");
 				}
 			}
 		}
-		*/
 		return new Nothing<IList<Node<A>>>();
 	}
 
@@ -199,22 +206,19 @@ public class DepthFirstSearch<A> {
 		
 		/*
 		//Printing the map:
-		for (Map.Entry<Coordinate,Node<Coordinate>> e : nicksGraph.getNodes().entrySet()) {
-		      Coordinate c = e.getKey();
-		      Node<Coordinate> node = e.getValue();
-		      assert(c.equals(node.getContent()));
-		      System.out.print("(" + c.x + "," + c.y + "): ");
-		      for(Node<Coordinate> s : node.getSuccessors()) {
-		    	  System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
-		      }
-		      System.out.println();
-		}
+		for (Node<Coordinate> node : nicksGraph.getNodes()) {
+	        System.out.print("(" + node.getContent().x + "," + node.getContent().y + "): ");
+	        for(Node<Coordinate> s : node.getSuccessors()) {
+	        	System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
+	        }
+	        System.out.println();
+	    }
 		*/
 		
 		Coordinate sn = new Coordinate(1, 0);
-		Coordinate tg = new Coordinate(4, 1);
+		Coordinate tg = new Coordinate(4, 2);
 		
-		new BreadthFirstSearch<Coordinate>(nicksGraph, sn, tg);
+		new DepthFirstSearch<Coordinate>(nicksGraph, sn, tg);
 	}
 
 }

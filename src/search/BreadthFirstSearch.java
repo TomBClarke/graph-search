@@ -3,6 +3,7 @@ package search;
 import graph.Coordinate;
 import graph.Graph;
 import graph.Node;
+import ilist.IList;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -35,7 +36,14 @@ public class BreadthFirstSearch<A> {
 				return a.equals(tg);
 			}
 		};
-		System.out.println(findNodeFrom(graph.getNodes().get(sn), condition));
+		
+		if(!graph.getNode(sn).isNothing()) {
+			System.out.println("Node found: " + findNodeFrom(graph.getNode(sn).fromMaybe(), condition));
+			//System.out.println("Path found: " + findPathFrom(graph.getNode(sn).fromMaybe(), condition));
+		} else {
+			System.out.println("Node found: " + graph.getNode(sn));
+			//System.out.println("Path found: " + graph.getNode(sn));
+		}
 	}
 
 	/**
@@ -71,10 +79,9 @@ public class BreadthFirstSearch<A> {
 	 * @param p The predicate the end node must satisfy.
 	 * @return The list of nodes to pass through to get to the target, or nothing if it can't be reached.
 	 */
-	Nothing<LinkedHashSet<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
+	Nothing<IList<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
 		// TODO - This method.
-		//Set<Node<A>>path = new LinkedHashSet<Node<A>>();
-		return new Nothing<LinkedHashSet<Node<A>>>();
+		return new Nothing<IList<Node<A>>>();
 	}
 
 	public static void main(String[] args) {
@@ -175,20 +182,17 @@ public class BreadthFirstSearch<A> {
 		
 		/*
 		//Printing the map:
-		for (Map.Entry<Coordinate,Node<Coordinate>> e : nicksGraph.getNodes().entrySet()) {
-		      Coordinate c = e.getKey();
-		      Node<Coordinate> node = e.getValue();
-		      assert(c.equals(node.getContent()));
-		      System.out.print("(" + c.x + "," + c.y + "): ");
-		      for(Node<Coordinate> s : node.getSuccessors()) {
-		    	  System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
-		      }
-		      System.out.println();
-		}
+		for (Node<Coordinate> node : nicksGraph.getNodes()) {
+	        System.out.print("(" + node.getContent().x + "," + node.getContent().y + "): ");
+	        for(Node<Coordinate> s : node.getSuccessors()) {
+	        	System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
+	        }
+	        System.out.println();
+	    }
 		*/
 		
 		Coordinate sn = new Coordinate(1, 0);
-		Coordinate tg = new Coordinate(4, 0);
+		Coordinate tg = new Coordinate(4, 2);
 		
 		new BreadthFirstSearch<Coordinate>(nicksGraph, sn, tg);
 	}
