@@ -38,8 +38,8 @@ public class Nil<A> implements IList<A> {
     return false;
   }
   
-  public IList<A> head(){
-	  return this;
+  public A head(){
+	  return null;
   }
   
   public IList<A> tail(){
