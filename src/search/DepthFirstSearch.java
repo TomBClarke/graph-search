@@ -42,7 +42,7 @@ public class DepthFirstSearch<A> implements Search<A> {
 		};
 		
 		System.out.println("Node found: " + findNodeFrom(graph.getNode(sn).fromMaybe(), condition).fromMaybe());
-		//System.out.println("Path found: " + findPathFrom(graph.getNode(sn).fromMaybe(), condition).fromMaybe());
+		System.out.println("Path found: " + findPathFrom(graph.getNode(sn).fromMaybe(), condition).fromMaybe());
 	}
 
 	/**
