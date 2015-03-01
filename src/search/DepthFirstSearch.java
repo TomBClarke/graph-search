@@ -93,7 +93,6 @@ public class DepthFirstSearch<A> implements Search<A> {
 		frontier.push(x);
 		while (!frontier.empty()) {
 			Node<A> y = frontier.pop();
-			//System.out.println("Using node: " + y);
 			if (!visited.contains(y)) {
 				if (p.holds(y.getContent())) {
 					return new Just<Node<A>>(y);

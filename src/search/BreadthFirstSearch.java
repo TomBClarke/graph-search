@@ -94,7 +94,6 @@ public class BreadthFirstSearch<A> implements Search<A> {
 		frontier.add(x);
 		while (!frontier.isEmpty()) {
 			Node<A> y = frontier.poll();
-			//System.out.println("node to use: " + y);
 			if (!visited.contains(y)) {
 				if (p.holds(y.getContent())) {
 					return new Just<Node<A>>(y);
