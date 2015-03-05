@@ -14,6 +14,9 @@ public class Node<A> {
 	
 	private A nodeContent; 
 	private Set<Node<A>> successors;
+	private Double f;
+	private Double g;
+	//f=g+h
 	
 	/**
 	 * Creates node with content. The implementation for the successors is also defined here.
@@ -22,7 +25,8 @@ public class Node<A> {
 	 */
 	public Node(A nodeContent){
 		this.nodeContent = nodeContent;
-		this.successors = new LinkedHashSet<Node<A>>();
+		successors = new LinkedHashSet<Node<A>>();
+		g = Double.MAX_VALUE;
 	}
 	
 	public String toString(){
@@ -45,6 +49,22 @@ public class Node<A> {
 	 */
 	public Set<Node<A>> getSuccessors(){
 		return successors;
+	}
+	
+	public Double getF(){
+		return f;
+	}
+	
+	public Double getG(){
+		return g;
+	}
+	
+	public void setF(Double f){
+		this.f = f;
+	}
+	
+	public void setG(Double g){
+		this.g = g;
 	}
 	
 	/**

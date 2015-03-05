@@ -121,11 +121,17 @@ public class SearchDemo {
 		
 		DepthFirstSearch<MyPoint> dfs = new DepthFirstSearch<MyPoint>();
 		BreadthFirstSearch<MyPoint> bfs = new BreadthFirstSearch<MyPoint>();
+		AStarSearch<MyPoint> astar = new AStarSearch<MyPoint>();
 		
 		System.out.println("Depth first search:");
 		dfs.search(nicksGraph, sn, tg);
 		System.out.println("Breadth first search:");
 		bfs.search(nicksGraph, sn, tg);
+		
+		
+		
+		System.out.println("A Star Search");
+		//astar.search(origin, destination, new Function<MyPoint,Double>(), d);
 	}
 
 }
