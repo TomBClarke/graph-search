@@ -10,17 +10,43 @@ import java.util.Set;
 import ilist.*;
 import maybe.*;
 
+/**
+ * Allows an A* search to be ran on a graph.
+ * 
+ * @author Tom
+ *
+ * @param <A>
+ */
 public class AStarSearch<A> {
 	
-	public void search(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d){
-		System.out.println("Node found: " + findNodeFrom(origin, destination, h, d).fromMaybe());
-		System.out.println("Path found: " + findPathFrom(origin, destination, h, d).fromMaybe());
+	/**
+	 * Runs a depth first search on a graph.
+	 * 
+	 * @param graph The graph of nodes used.
+	 * @param origin The start node.
+	 * @param destination The end node.
+	 * @param h The heuristic function.
+	 * @param d The distance between two nodes function.
+	 */
+	public void search(Graph<A> graph, A origin, A destination, Function2<A,Double> h, Function2<A,Double> d){
+		System.out.println("Node found: " + findNodeFrom(graph.getNode(origin).fromMaybe(), graph.getNode(destination).fromMaybe(), h, d).fromMaybe());
+		System.out.println("Path found: " + findPathFrom(graph.getNode(origin).fromMaybe(), graph.getNode(destination).fromMaybe(), h, d).fromMaybe());
 	}
 	
+	/**
+	 * Finds a node using A* search.
+	 * 
+	 * @param origin The start node.
+	 * @param destination The end node.
+	 * @param h The heuristic function.
+	 * @param d The distance between two nodes function.
+	 * @return The node found.
+	 */
 	public Maybe<Node<A>> findNodeFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d){
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
 		Queue<Node<A>> frontier = new PriorityQueue<Node<A>>(11, new NodeComparator());
 		
+		frontier.add(origin);
 		origin.setG(0.0);
 		origin.setF(h.apply(origin.getContent(), destination.getContent()));
 				
@@ -42,16 +68,26 @@ public class AStarSearch<A> {
 			}
 		}
 		return new Nothing<Node<A>>();		
-	}
+	}	
 	
+	/**
+	 * Finds a path to a node using A* search.
+	 * 
+	 * @param origin The start node.
+	 * @param destination The end node.
+	 * @param h The heuristic function.
+	 * @param d The distance between two nodes function.
+	 * @return The path to the destination node.
+	 */
 	public Maybe<IList<Node<A>>> findPathFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d){
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
 		Queue<Node<A>> frontier = new PriorityQueue<Node<A>>(11, new NodeComparator());
 		Map<Node<A>,Node<A>> pred = new LinkedHashMap<Node<A>,Node<A>>(); 
 		
+		frontier.add(origin);
 		origin.setG(0.0);
 		origin.setF(h.apply(origin.getContent(), destination.getContent()));
-				
+
 		while(!frontier.isEmpty()){
 			Node<A> n = frontier.poll();
 			if(n.equals(destination)) {

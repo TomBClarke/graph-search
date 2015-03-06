@@ -16,7 +16,6 @@ public class Node<A> {
 	private Set<Node<A>> successors;
 	private Double f;
 	private Double g;
-	//f=g+h
 	
 	/**
 	 * Creates node with content. The implementation for the successors is also defined here.
@@ -30,7 +29,7 @@ public class Node<A> {
 	}
 	
 	public String toString(){
-		return "Node: " + nodeContent.toString(); // + " Successors: " + successors.size();
+		return "Node: " + nodeContent.toString();
 	}
 	
 	/**
@@ -51,18 +50,38 @@ public class Node<A> {
 		return successors;
 	}
 	
+	/**
+	 * Gets the f value of the node.
+	 * 
+	 * @return f
+	 */
 	public Double getF(){
 		return f;
 	}
 	
+	/**
+	 * The g value of the node.
+	 * 
+	 * @return g.
+	 */
 	public Double getG(){
 		return g;
 	}
 	
+	/**
+	 * Sets a new f value.
+	 * 
+	 * @param f The new value.
+	 */
 	public void setF(Double f){
 		this.f = f;
 	}
 	
+	/**
+	 * Sets a new g value.
+	 * 
+	 * @param g The new g value.
+	 */
 	public void setG(Double g){
 		this.g = g;
 	}

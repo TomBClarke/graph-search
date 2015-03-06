@@ -1,9 +1,18 @@
 package demo;
 
 import java.util.Map;
+import java.util.Scanner;
 
 import search.*;
+import stackqueue.*;
 
+/**
+ * Used to demonstrate the graph search exercise.
+ * 
+ * 
+ * @author Tom
+ *
+ */
 public class SearchDemo {
 	
 	public static void main(String args[]){
@@ -102,36 +111,116 @@ public class SearchDemo {
 			}
 		}
 		
-		/*
-		//Printing the map:
-		for (Map.Entry<MyPoint,Node<MyPoint>> e : nicksGraph.getNodes().entrySet()) {
-			MyPoint c = e.getKey();
-		    Node<MyPoint> node = e.getValue();
-		    assert(c.equals(node.getContent()));
-		    System.out.print("(" + c.x + "," + c.y + "): ");
-		    for(Node<MyPoint> s : node.getSuccessors()) {
-		    	System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
-		    }
-		    System.out.println();
+		//DepthFirstSearch<MyPoint> dfs = new DepthFirstSearch<MyPoint>();
+		//BreadthFirstSearch<MyPoint> bfs = new BreadthFirstSearch<MyPoint>();
+		//AStarSearch<MyPoint> astar = new AStarSearch<MyPoint>();		
+		
+		Search<MyPoint> search = new Search<MyPoint>();
+		
+		while(true) {
+			Scanner input = new Scanner(System.in);
+			String cmd = input.nextLine();
+			if(cmd.equals("dfs")) {
+				System.out.println("Using depth-first search:");
+				
+				int[] points = getPoints();
+				MyPoint sn = new MyPoint(points[0], points[1]);
+				MyPoint tg = new MyPoint(points[2], points[3]);
+				
+				Predicate<MyPoint> condition = new Predicate<MyPoint>() {
+					@Override
+					public boolean holds(MyPoint a) {
+						return a.equals(tg);
+					}
+				};
+				
+				StackQueue<MyPoint> frontier = new MyStack<MyPoint>();
+				
+				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+			} else if (cmd.equals("bfs")) {
+				System.out.println("Using breadth-first search:");
+
+				int[] points = getPoints();
+				MyPoint sn = new MyPoint(points[0], points[1]);
+				MyPoint tg = new MyPoint(points[2], points[3]);
+
+				Predicate<MyPoint> condition = new Predicate<MyPoint>() {
+					@Override
+					public boolean holds(MyPoint a) {
+						return a.equals(tg);
+					}
+				};
+				
+				StackQueue<MyPoint> frontier = new MyQueue<MyPoint>();
+				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+			} else if (cmd.equals("astar")) {
+				System.out.println("Using A* search:");
+				
+				int[] points = getPoints();
+				MyPoint sn = new MyPoint(points[0], points[1]);
+				MyPoint tg = new MyPoint(points[2], points[3]);
+				
+				Function2<MyPoint,Double> h = new Function2<MyPoint,Double>(){
+					@Override
+					public Double apply(MyPoint a, MyPoint b) {
+						//Manhattan distance.
+						return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+					}
+				}; 
+				
+				Function2<MyPoint,Double> d = new Function2<MyPoint,Double>(){
+					@Override
+					public Double apply(MyPoint a, MyPoint b) {
+						return 1.0;
+					}
+				
+				};
+				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d).fromMaybe());
+				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d).fromMaybe());
+			} else if (cmd.equals("map")) {
+				System.out.println("Printing map...");
+				for (Map.Entry<MyPoint,Node<MyPoint>> e : nicksGraph.getNodes().entrySet()) {
+					MyPoint c = e.getKey();
+				    Node<MyPoint> node = e.getValue();
+				    assert(c.equals(node.getContent()));
+				    System.out.print("(" + c.x + "," + c.y + "): ");
+				    for(Node<MyPoint> s : node.getSuccessors()) {
+				    	System.out.print("(" + s.getContent().x + "," + s.getContent().y + "), ");
+				    }
+				    System.out.println();
+				}
+			} else if (cmd.equals("exit")) {
+				System.out.println("Goodbye");
+				System.exit(0);
+			} else if (cmd.equals("help")) {				
+				System.out.println("Commands:");
+				System.out.println("dfs - Perform a depth-first search.");
+				System.out.println("bfs - Perform a breadth-first search.");
+				System.out.println("astar - Perform an A* search.");
+				System.out.println("map - Display the map.");
+				System.out.println("exit - Exit the program.");
+			} else {
+				System.out.println("Please enter a valid command. Type help for a list of commands.");
+			}
 		}
-		*/
-		
-		MyPoint sn = new MyPoint(0, 0);
-		MyPoint tg = new MyPoint(9, 1);
-		
-		DepthFirstSearch<MyPoint> dfs = new DepthFirstSearch<MyPoint>();
-		BreadthFirstSearch<MyPoint> bfs = new BreadthFirstSearch<MyPoint>();
-		AStarSearch<MyPoint> astar = new AStarSearch<MyPoint>();
-		
-		System.out.println("Depth first search:");
-		dfs.search(nicksGraph, sn, tg);
-		System.out.println("Breadth first search:");
-		bfs.search(nicksGraph, sn, tg);
-		
-		
-		
-		System.out.println("A Star Search");
-		//astar.search(origin, destination, new Function<MyPoint,Double>(), d);
+	}
+	
+	/**
+	 * Used to get the coordinates used in all three types of search.
+	 * 
+	 * @return
+	 */
+	private static int[] getPoints(){
+		System.out.println("Please enter the cooridnates 1-by-1, in the order x1, y1, x2, y2.");
+		Scanner input = new Scanner(System.in);
+		int[] points = new int[4];
+		for(int i = 0; i < 4; i++){
+			int p = input.nextInt(); input.nextLine();
+			points[i] = p;
+		}
+		return points;
 	}
 
 }

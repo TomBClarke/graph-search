@@ -2,6 +2,13 @@ package search;
 
 import java.util.Comparator;
 
+/**
+ * Used to order the priority queue in the search.
+ * 
+ * 
+ * @author Tom
+ *
+ */
 public class NodeComparator implements Comparator<Node> {
 
 	public int compare(Node x, Node y) {

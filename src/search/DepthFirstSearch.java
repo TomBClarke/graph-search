@@ -17,7 +17,7 @@ import maybe.*;
  *
  * @param <A>
  */
-public class DepthFirstSearch<A> implements Search<A> {
+public class DepthFirstSearch<A> {
 
 	/**
 	 * Creates  a depth first search object.

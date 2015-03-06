@@ -18,7 +18,7 @@ import maybe.*;
  *
  * @param <A>
  */
-public class BreadthFirstSearch<A> implements Search<A> {
+public class BreadthFirstSearch<A> {
 
 	/**
 	 * Creates  a breadth first search object.
