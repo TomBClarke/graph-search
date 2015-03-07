@@ -3,8 +3,6 @@ package search;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 
 import ilist.*;
@@ -12,8 +10,6 @@ import maybe.*;
 import stackqueue.*;
 
 public class Search<A> {
-	
-	//BFS & DFS:
 	
 	/**
 	 * Returns the target node if found.
@@ -85,8 +81,6 @@ public class Search<A> {
 
 		return new Nothing<IList<Node<A>>>();
 	}
-	
-	//A*:
 	
 	/**
 	 * Performs a search on a graph.

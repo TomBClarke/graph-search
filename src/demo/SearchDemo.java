@@ -13,7 +13,7 @@ import stackqueue.*;
  * @author Tom
  *
  */
-public class SearchDemo<A> {
+public class SearchDemo {
 	
 	public static void main(String args[]){
 		int [] [] nick = {
@@ -127,21 +127,12 @@ public class SearchDemo<A> {
 			}
 		};
 		
-		System.out.println("Node found: " + bfs.findNodeFrom(nicksGraph.getNode(sn1).fromMaybe(), condition).fromMaybe());
 		System.out.println("Path found: " + bfs.findPathFrom(nicksGraph.getNode(sn1).fromMaybe(), condition).fromMaybe());
 		*/
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		Search<MyPoint> search = new Search<MyPoint>();
 		
-		SearchDemo<MyPoint> demo = new SearchDemo<MyPoint>();
+		SearchDemo demo = new SearchDemo();
 		
 		while(true) {
 			Scanner input = new Scanner(System.in);

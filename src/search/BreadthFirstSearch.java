@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import stackqueue.MyQueue;
+import stackqueue.StackQueue;
 import maybe.*;
 
 /**
@@ -119,13 +121,13 @@ public class BreadthFirstSearch<A> {
 	 * @return The list of nodes to pass through to get to the target, or nothing if it can't be reached.
 	 */
 	public Maybe<IList<Node<A>>> findPathFrom(Node<A> x, Predicate<A> p) {
-		Queue<Node<A>> frontier = new LinkedList<Node<A>>();
+		StackQueue<A> frontier = new MyQueue<A>();
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
 		Map<Node<A>,Node<A>> path = new LinkedHashMap<Node<A>,Node<A>>();
 		
-		frontier.add(x);
+		frontier.push(x);
 		while (!frontier.isEmpty()) {
-			Node<A> y = frontier.poll();
+			Node<A> y = frontier.pop();
 			if (!visited.contains(y)) {
 				if (p.holds(y.getContent())) {
 					IList<Node<A>> pathList = new Cons<Node<A>>(y, new Nil<Node<A>>());
@@ -141,7 +143,7 @@ public class BreadthFirstSearch<A> {
 				if(!y.getSuccessors().isEmpty()){
 					for(Node<A> n : y.getSuccessors()){
 						if(!visited.contains(n)){
-							frontier.add(n);
+							frontier.push(n);
 							path.put(n, y);
 						}
 					}
