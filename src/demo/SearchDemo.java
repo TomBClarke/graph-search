@@ -111,25 +111,6 @@ public class SearchDemo {
 			}
 		}
 		
-		//DepthFirstSearch<MyPoint> dfs = new DepthFirstSearch<MyPoint>();
-		//BreadthFirstSearch<MyPoint> bfs = new BreadthFirstSearch<MyPoint>();
-		//AStarSearch<MyPoint> astar = new AStarSearch<MyPoint>();		
-		
-		/*
-		int[] points1 = getPoints();
-		MyPoint sn1 = new MyPoint(points1[0], points1[1]);
-		MyPoint tg1 = new MyPoint(points1[2], points1[3]);
-		
-		Predicate<MyPoint> condition = new Predicate<MyPoint>() {
-			@Override
-			public boolean holds(MyPoint a) {
-				return a.equals(tg1);
-			}
-		};
-		
-		System.out.println("Path found: " + bfs.findPathFrom(nicksGraph.getNode(sn1).fromMaybe(), condition).fromMaybe());
-		*/
-		
 		Search<MyPoint> search = new Search<MyPoint>();
 		
 		SearchDemo demo = new SearchDemo();

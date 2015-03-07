@@ -39,4 +39,9 @@ public interface StackQueue<A> {
 		 * @return If the node is round.
 		 */
 		public boolean contains(Node<A> x);
+		
+		/**
+		 * Empties the stack/queue by assigning a new empty stack/queue to it.
+		 */
+		public void empty();
 }

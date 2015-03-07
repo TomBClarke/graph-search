@@ -25,6 +25,7 @@ public class Search<A> {
 			Node<A> y = frontier.pop();
 			if (!visited.contains(y)) {
 				if (p.holds(y.getContent())) {
+					frontier.empty();
 					return new Just<Node<A>>(y);
 				}
 				visited.add(y);
@@ -37,6 +38,8 @@ public class Search<A> {
 				}
 			}
 		}
+		
+		frontier.empty();
 		return new Nothing<Node<A>>();
 	}
 
@@ -63,6 +66,7 @@ public class Search<A> {
 					}
 					pathList = pathList.append(x);
 					pathList = pathList.reverse();
+					frontier.empty();
 					return new Just<IList<Node<A>>>(pathList);
 				}
 				visited.add(y);
@@ -79,6 +83,7 @@ public class Search<A> {
 			}
 		}
 
+		frontier.empty();
 		return new Nothing<IList<Node<A>>>();
 	}
 	
@@ -101,6 +106,7 @@ public class Search<A> {
 		while(!frontier.isEmpty()){
 			Node<A> n = frontier.pop();
 			if(n.equals(destination)) { 
+				frontier.empty();
 				return new Just<Node<A>>(n);
 			}
 			visited.add(n);
@@ -115,6 +121,8 @@ public class Search<A> {
 				}
 			}
 		}
+		
+		frontier.empty();
 		return new Nothing<Node<A>>();		
 	}	
 	
@@ -145,6 +153,7 @@ public class Search<A> {
 				}
 				pathList = pathList.append(origin);
 				pathList = pathList.reverse();
+				frontier.empty();
 				return new Just<IList<Node<A>>>(pathList);
 			}
 			visited.add(n);
@@ -161,6 +170,7 @@ public class Search<A> {
 			}
 		}
 
+		frontier.empty();
 		return new Nothing<IList<Node<A>>>();
 	}
 }

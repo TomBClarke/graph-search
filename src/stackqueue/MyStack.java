@@ -27,4 +27,8 @@ public class MyStack<A> implements StackQueue<A> {
 	public boolean contains(Node<A> x){
 		return frontier.contains(x);
 	}
+	
+	public void empty(){
+		frontier = new Stack<Node<A>>();
+	}
 }
