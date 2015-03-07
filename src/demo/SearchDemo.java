@@ -13,7 +13,7 @@ import stackqueue.*;
  * @author Tom
  *
  */
-public class SearchDemo {
+public class SearchDemo<A> {
 	
 	public static void main(String args[]){
 		int [] [] nick = {
@@ -115,46 +115,45 @@ public class SearchDemo {
 		//BreadthFirstSearch<MyPoint> bfs = new BreadthFirstSearch<MyPoint>();
 		//AStarSearch<MyPoint> astar = new AStarSearch<MyPoint>();		
 		
+		/*
+		int[] points1 = getPoints();
+		MyPoint sn1 = new MyPoint(points1[0], points1[1]);
+		MyPoint tg1 = new MyPoint(points1[2], points1[3]);
+		
+		Predicate<MyPoint> condition = new Predicate<MyPoint>() {
+			@Override
+			public boolean holds(MyPoint a) {
+				return a.equals(tg1);
+			}
+		};
+		
+		System.out.println("Node found: " + bfs.findNodeFrom(nicksGraph.getNode(sn1).fromMaybe(), condition).fromMaybe());
+		System.out.println("Path found: " + bfs.findPathFrom(nicksGraph.getNode(sn1).fromMaybe(), condition).fromMaybe());
+		*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Search<MyPoint> search = new Search<MyPoint>();
+		
+		SearchDemo<MyPoint> demo = new SearchDemo<MyPoint>();
 		
 		while(true) {
 			Scanner input = new Scanner(System.in);
 			String cmd = input.nextLine();
 			if(cmd.equals("dfs")) {
 				System.out.println("Using depth-first search:");
-				
-				int[] points = getPoints();
-				MyPoint sn = new MyPoint(points[0], points[1]);
-				MyPoint tg = new MyPoint(points[2], points[3]);
-				
-				Predicate<MyPoint> condition = new Predicate<MyPoint>() {
-					@Override
-					public boolean holds(MyPoint a) {
-						return a.equals(tg);
-					}
-				};
-				
 				StackQueue<MyPoint> frontier = new MyStack<MyPoint>();
-				
-				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
-				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+				demo.searchDFSBFS(search, nicksGraph, frontier);
 			} else if (cmd.equals("bfs")) {
-				System.out.println("Using breadth-first search:");
-
-				int[] points = getPoints();
-				MyPoint sn = new MyPoint(points[0], points[1]);
-				MyPoint tg = new MyPoint(points[2], points[3]);
-
-				Predicate<MyPoint> condition = new Predicate<MyPoint>() {
-					@Override
-					public boolean holds(MyPoint a) {
-						return a.equals(tg);
-					}
-				};
-				
+				System.out.println("Using breadth-first search:");				
 				StackQueue<MyPoint> frontier = new MyQueue<MyPoint>();
-				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
-				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+				demo.searchDFSBFS(search, nicksGraph, frontier);
 			} else if (cmd.equals("astar")) {
 				System.out.println("Using A* search:");
 				
@@ -177,8 +176,11 @@ public class SearchDemo {
 					}
 				
 				};
-				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d).fromMaybe());
-				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d).fromMaybe());
+				
+				StackQueue<MyPoint> frontier = new MyPriorityQueue<MyPoint>(11, new NodeComparator<MyPoint>());
+				
+				System.out.println("Node found: " + search.findNodeFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d, frontier).fromMaybe());
+				System.out.println("Path found: " + search.findPathFrom(nicksGraph.getNode(sn).fromMaybe(), nicksGraph.getNode(tg).fromMaybe(), h, d, frontier).fromMaybe());
 			} else if (cmd.equals("map")) {
 				System.out.println("Printing map...");
 				for (Map.Entry<MyPoint,Node<MyPoint>> e : nicksGraph.getNodes().entrySet()) {
@@ -208,9 +210,32 @@ public class SearchDemo {
 	}
 	
 	/**
+	 * Searches using generalisation in BFS and DFS.
+	 * 
+	 * @param search The search object.
+	 * @param graph The graph of nodes.
+	 * @param frontier The type of frontier, which defines the type of search.
+	 */
+	public void searchDFSBFS(Search<MyPoint> search, Graph<MyPoint> graph, StackQueue<MyPoint> frontier){
+		int[] points = getPoints();
+		MyPoint sn = new MyPoint(points[0], points[1]);
+		MyPoint tg = new MyPoint(points[2], points[3]);
+		
+		Predicate<MyPoint> condition = new Predicate<MyPoint>() {
+			@Override
+			public boolean holds(MyPoint a) {
+				return a.equals(tg);
+			}
+		};
+		
+		System.out.println("Node found: " + search.findNodeFrom(graph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+		System.out.println("Path found: " + search.findPathFrom(graph.getNode(sn).fromMaybe(), condition, frontier).fromMaybe());
+	}
+	
+	/**
 	 * Used to get the coordinates used in all three types of search.
 	 * 
-	 * @return
+	 * @return An array of numbes which will form the coordinates.
 	 */
 	private static int[] getPoints(){
 		System.out.println("Please enter the cooridnates 1-by-1, in the order x1, y1, x2, y2.");

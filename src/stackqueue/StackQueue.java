@@ -32,4 +32,11 @@ public interface StackQueue<A> {
 		 */
 		public boolean isEmpty();
 		
+		/**
+		 * Returns if a node is in the stack/queue.
+		 * 
+		 * @param x The node to check for.
+		 * @return If the node is round.
+		 */
+		public boolean contains(Node<A> x);
 }

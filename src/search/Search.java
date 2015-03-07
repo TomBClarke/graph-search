@@ -97,16 +97,15 @@ public class Search<A> {
 	 * @param d The distance between two nodes function.
 	 * @return The node found.
 	 */
-	public Maybe<Node<A>> findNodeFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d){
+	public Maybe<Node<A>> findNodeFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d, StackQueue<A> frontier){
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
-		Queue<Node<A>> frontier = new PriorityQueue<Node<A>>(11, new NodeComparator());
 		
-		frontier.add(origin);
+		frontier.push(origin);
 		origin.setG(0.0);
 		origin.setF(h.apply(origin.getContent(), destination.getContent()));
 				
 		while(!frontier.isEmpty()){
-			Node<A> n = frontier.poll();
+			Node<A> n = frontier.pop();
 			if(n.equals(destination)) { 
 				return new Just<Node<A>>(n);
 			}
@@ -117,7 +116,7 @@ public class Search<A> {
 					s.setG(cost);
 					s.setF(s.getG() + h.apply(s.getContent(), destination.getContent()));
 					if(!frontier.contains(s)){
-						frontier.add(s);
+						frontier.push(s);
 					}
 				}
 			}
@@ -134,17 +133,16 @@ public class Search<A> {
 	 * @param d The distance between two nodes function.
 	 * @return The path to the destination node.
 	 */
-	public Maybe<IList<Node<A>>> findPathFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d){
+	public Maybe<IList<Node<A>>> findPathFrom(Node<A> origin, Node<A> destination, Function2<A,Double> h, Function2<A,Double> d, StackQueue<A> frontier){
 		Set<Node<A>> visited = new LinkedHashSet<Node<A>>();
-		Queue<Node<A>> frontier = new PriorityQueue<Node<A>>(11, new NodeComparator());
 		Map<Node<A>,Node<A>> pred = new LinkedHashMap<Node<A>,Node<A>>(); 
 		
-		frontier.add(origin);
+		frontier.push(origin);
 		origin.setG(0.0);
 		origin.setF(h.apply(origin.getContent(), destination.getContent()));
 
 		while(!frontier.isEmpty()){
-			Node<A> n = frontier.poll();
+			Node<A> n = frontier.pop();
 			if(n.equals(destination)) {
 				IList<Node<A>> pathList = new Cons<Node<A>>(destination, new Nil<Node<A>>());
 				while(!pred.get(destination).equals(origin)){
@@ -163,7 +161,7 @@ public class Search<A> {
 					s.setG(cost);
 					s.setF(s.getG() + h.apply(s.getContent(), destination.getContent()));
 					if(!frontier.contains(s)){
-						frontier.add(s);
+						frontier.push(s);
 					}
 				}
 			}

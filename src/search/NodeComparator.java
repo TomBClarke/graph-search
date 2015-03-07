@@ -9,9 +9,9 @@ import java.util.Comparator;
  * @author Tom
  *
  */
-public class NodeComparator implements Comparator<Node> {
+public class NodeComparator<A> implements Comparator<Node<A>> {
 
-	public int compare(Node x, Node y) {
+	public int compare(Node<A> x, Node<A> y) {
 		if(x.getF() > y.getF()){
 			return 1;
 		} else if (y.getF() > x.getF()) {

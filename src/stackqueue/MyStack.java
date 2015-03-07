@@ -1,29 +1,30 @@
 package stackqueue;
 
+import java.util.Stack;
+
 import search.Node;
-import ilist.*;
 
 public class MyStack<A> implements StackQueue<A> {
 
-	private IList<Node<A>> list;
+	private Stack<Node<A>> frontier;
 	
 	public MyStack(){
-		list = new Nil<Node<A>>();
+		frontier = new Stack<Node<A>>();
 	}
 
 	public Node<A> pop() {
-		Node<A> a = list.head();
-		list = list.tail();
-		return a;
+		return frontier.pop();
 	}
 
 	public void push(Node<A> x) {
-		list = list.reverse().append(x).reverse();
-		
+		frontier.push(x);
 	}
 
 	public boolean isEmpty() {
-		return list.isEmpty();
+		return frontier.isEmpty();
 	}
 
+	public boolean contains(Node<A> x){
+		return frontier.contains(x);
+	}
 }
