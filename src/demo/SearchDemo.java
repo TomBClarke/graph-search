@@ -115,6 +115,8 @@ public class SearchDemo {
 		
 		SearchDemo demo = new SearchDemo();
 		
+		System.out.println("Graph Search by Thomas Clarke, 1443652");
+		
 		while(true) {
 			Scanner input = new Scanner(System.in);
 			String cmd = input.nextLine();
